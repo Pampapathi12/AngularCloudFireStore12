@@ -18,11 +18,10 @@
 
 8.D:\AngularCloudFireStore12\EmployeeCrudOperations>ng serve
 
-#Angular Live Development Server is listening on localhost:4200, open your browser on http://localhost:4200/ **
+##Angular Live Development Server is listening on localhost:4200, open your browser on http://localhost:4200/ **
 
-#Video of Project
+##Video of Project
 
-
-
+https://user-images.githubusercontent.com/111368155/193341215-9ede9b27-9466-4c81-abfa-2ad241c57826.mp4
 
 
