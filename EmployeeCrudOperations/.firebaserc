@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "employees-e353e": {
+      "hosting": {
+        "EmployeeCrudOperations": [
+          "employees-e353e"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "employees-e353e"
+  }
+}
