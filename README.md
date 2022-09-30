@@ -8,7 +8,7 @@
 
 3.D:\AngularCloudFireStore12\EmployeeCrudOperations>npm i @angular/core
 
-4.D:\AngularCloudFireStore12\EmployeeCrudOperations>
+4.D:\AngularCloudFireStore12\EmployeeCrudOperations>npm i @angular/fire
 
 5.D:\AngularCloudFireStore12\EmployeeCrudOperations>ng add @ng-bootstrap/ng-bootstrap
 
@@ -17,3 +17,12 @@
 7.D:\AngularCloudFireStore12\EmployeeCrudOperations>ng build
 
 8.D:\AngularCloudFireStore12\EmployeeCrudOperations>ng serve
+
+#Angular Live Development Server is listening on localhost:4200, open your browser on http://localhost:4200/ **
+
+#Video of Project
+
+https://user-images.githubusercontent.com/111368155/193340177-001e35ff-6ead-4013-a192-15157e95bec7.mp4
+
+
+
