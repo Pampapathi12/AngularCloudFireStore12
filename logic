@@ -1,0 +1,116 @@
+  reviewCtrl.nextPopover = function (obj, ind) {
+
+            // var payloadArray = [];
+
+            // // Loop through obj array to create the payload
+            // for (let i = 0; i < obj.length; i++) {
+            //     if (obj[i].achievementsOfMilestone) {
+            //         // Create an object to hold the data for each submilestone
+            //         var data = {
+            //             appraisalNo: userDetail.currentYearAppraisalNo,
+            //             milestoneId: obj[i].milestoneId,
+            //             submilestoneId: obj[i].submilestoneId,
+            //             achievementsOfMilestone: obj[i].achievementsOfMilestone.replace('&', '&amp;').replace('>', '&gt;').replace('<', '&lt;').replace(/(?:\r\n|\r|\n)/g, '<br/>'),
+            //             actionName: "SELF_ASS_SAVED",
+            //             closureStatusName: "SELF_ASSESSMENT"
+            //         };
+
+            //         // Add the data object to the payloadArray
+            //         payloadArray.push(data);
+            //     } else {
+            //         toastr.error("Please fill mandatory fields");
+            //         return;
+            //     }
+            // }
+            // var payloadArray = [];
+
+            // // Loop through obj array to create the payload
+            // for (let i = 0; i < obj.length; i++) {
+            //     if (obj[i].achievementsOfMilestone) {
+            //         // Create an object to hold the data for each milestone
+            //         var milestoneData = {
+            //             appraisalNo: userDetail.currentYearAppraisalNo,
+            //             milestoneId: obj[i].milestoneId,
+            //             actionName: "SELF_ASS_SAVED",
+            //             closureStatusName: "SELF_ASSESSMENT",
+            //             submilestones: []
+            //         };
+
+            //         // Create an object for each submilestone and add it to the submilestones array
+            //         var submilestoneData = {
+            //             submilestoneId: obj[i].submilestoneId,
+            //             achievementsOfMilestone: obj[i].achievementsOfMilestone.replace('&', '&amp;').replace('>', '&gt;').replace('<', '&lt;').replace(/(?:\r\n|\r|\n)/g, '<br/>')
+            //         };
+
+            //         milestoneData.submilestones.push(submilestoneData);
+
+            //         // Add the milestoneData object to the payloadArray
+            //         payloadArray.push(milestoneData);
+            //     } else {
+            //         toastr.error("Please fill mandatory fields");
+            //         return;
+            //     }
+            // }
+            var payloadArray = [];
+
+            // Create an object to hold the data for the entire payload
+            var payloadData = {
+                appraisalNo: obj[0].appraisalNo, // Assuming appraisalNo is the same for all objects
+                milestoneId: obj[0].milestoneId, // Assuming milestoneId is the same for all objects
+                actionName: obj[0].actionName, // Assuming actionName is the same for all objects
+                closureStatusName: obj[0].closureStatusName, // Assuming closureStatusName is the same for all objects
+                submilestones: []
+            };
+        
+            // Loop through obj array to add each submilestone to the payloadData
+            for (let i = 0; i < obj.length; i++) {
+                if (obj[i].submilestone) {
+                    for (let j = 0; j < obj[i].submilestone.length; j++) {
+                        var submilestoneData = {
+                            submilestoneId: obj[i].submilestone[j].submilestoneId,
+                            achievementsOfMilestone: obj[i].submilestone[j].achievementsOfMilestone
+                        };
+        
+                        payloadData.submilestones.push(submilestoneData);
+                    }
+                } else {
+                    toastr.error("Please fill mandatory fields");
+                    return;
+                }
+            }
+            if (payloadArray.length > 0) {
+                console.log(payloadArray);
+                objectiveService.saveMilestoneEmpAssessment(payloadArray, config).then(
+                    function (response) {
+                        toastr.success($filter('translate')(response.data.message));
+                        reviewCtrl.getProgressStatus();
+
+                        // To Change the label of the next button when reached to the last item
+                        $scope.lastItem = false;
+                        if (ind == arr.length - 2) {
+                            $scope.lastItem = true;
+                        }
+
+                        // To close all popovers
+                        for (var j = reviewCtrl.milestonesList.length; j--;) {
+                            reviewCtrl.milestonesList[j].isOpen = false;
+                        }
+
+                        // To open the next Item
+                        if (ind <= arr.length - 2) {
+                            reviewCtrl.milestonesList[++ind].isOpen = true;
+                        } else {
+                            console.log("End");
+                        }
+
+                        // $scope.form.empAssMilestoneAchievementForm.$setPristine();
+                    },
+                    function (reason) {
+                        toastr.error($filter('translate')(reason.data.message));
+                    }
+                );
+            } else {
+                toastr.error("Please fill mandatory fields");
+            }
+
+        };
